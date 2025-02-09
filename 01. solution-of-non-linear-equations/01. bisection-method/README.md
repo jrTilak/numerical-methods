@@ -3,55 +3,55 @@
 ## Introduction
 The **Bisection Method** is a numerical technique used to find the root of a non-linear equation of the form:
 
-\[ f(x) = 0 \]
+f(x) = 0
 
 It is a simple and reliable method that works by iteratively dividing an interval in half and selecting the subinterval in which the function changes sign. This process continues until the solution converges within a specified tolerance level.
 
 ## How the Bisection Method Works
 The method follows these steps:
 
-1. **Select an interval \([a, b]\) where the function changes sign:**
-   - The function values at the endpoints must satisfy \( f(a) \times f(b) < 0 \).
+1. **Select an interval [a, b] where the function changes sign:**
+   - The function values at the endpoints must satisfy f(a) * f(b) < 0
    - This ensures there is at least one root in the interval.
 
-2. **Calculate the midpoint \( c \):**
-   \[ c = \frac{a + b}{2} \]
+2. **Calculate the midpoint c:**
+   c = (a + b)/2
 
-3. **Evaluate \( f(c) \):**
-   - If \( f(c) \) is close to zero (within the specified tolerance), then \( c \) is the root.
+3. **Evaluate f(c):**
+   - If f(c) is close to zero (within the specified tolerance), then c is the root.
    - Otherwise, determine the next interval:
-     - If \( f(a) \times f(c) < 0 \), the root is in \([a, c]\), so set \( b = c \).
-     - Otherwise, the root is in \([c, b]\), so set \( a = c \).
+     - If f(a) * f(c) < 0, the root is in [a, c], so set b = c
+     - Otherwise, the root is in [c, b], so set a = c
 
-4. **Repeat the process** until the interval width \( (b - a) \) is less than the tolerance level.
+4. **Repeat the process** until the interval width (b - a) is less than the tolerance level.
 
 ## Example Problem
 Find the root of the function:
 
-\[ f(x) = x^3 - 4x - 9 \]
+f(x) = x³ - 4x - 9
 
-in the interval \([2, 3]\) using the Bisection Method with a tolerance level of **0.001**.
+in the interval [2, 3] using the Bisection Method with a tolerance level of **0.001**.
 
 ## Program Explanation
 This C program implements the Bisection Method for solving non-linear equations.
 
 ### Code Breakdown
 
-1. **Define the function** \( f(x) \):
+1. **Define the function f(x):**
    ```c
    double fx(double x) {
        return x * x * x - 4 * x - 9;
    }
    ```
-   This function represents the equation \( x^3 - 4x - 9 = 0 \).
+   This function represents the equation x³ - 4x - 9 = 0
 
 2. **Bisection Method Implementation:**
-   - Checks if the interval is valid (\( f(a) \times f(b) < 0 \)).
-   - Iteratively computes the midpoint and evaluates \( f(c) \).
-   - Adjusts the interval based on the sign of \( f(c) \) and continues until the solution meets the tolerance criterion.
+   - Checks if the interval is valid (f(a) * f(b) < 0)
+   - Iteratively computes the midpoint and evaluates f(c)
+   - Adjusts the interval based on the sign of f(c) and continues until the solution meets the tolerance criterion.
 
 3. **Main Function:**
-   - Takes user input for the interval \([a, b]\).
+   - Takes user input for the interval [a, b]
    - Calls the `bisection()` function to find the root.
    - Prints the result.
 
