@@ -1,86 +1,76 @@
-# Bisection Method
 
-## Introduction
-The **Bisection Method** is a numerical technique used to find the root of a non-linear equation of the form:
+### **Bisection Method - Non-Linear Equation Solver**
 
-f(x) = 0
+#### **Description:**
+This program implements the **Bisection Method** to solve a non-linear equation. The user can specify the interval \([a, b]\) and the required precision (number of decimal places) for the root. The program iterates through the Bisection Method until the solution converges to the desired precision.
 
-It is a simple and reliable method that works by iteratively dividing an interval in half and selecting the subinterval in which the function changes sign. This process continues until the solution converges within a specified tolerance level.
+#### **Functionality:**
+- **User Input:**
+  - Interval \([a, b]\) where the root is expected.
+  - Precision (number of decimal places) for the root's accuracy.
+- **Output:**
+  - Iterations with the values of a, b, midpoint c, and f(c).
+  - Approximate root to the desired precision.
+  
+#### **Key Functions:**
+- **fx(x):** Defines the function f(x) = x³ - 4x - 9.
+- **isEqual(x, y, precision):** Checks if two floating-point numbers are equal up to the given precision.
+- **bisection(a, b, precision):** Implements the Bisection Method.
 
-## How the Bisection Method Works
-The method follows these steps:
+#### **Compilation and Running Instructions:**
 
-1. **Select an interval [a, b] where the function changes sign:**
-   - The function values at the endpoints must satisfy f(a) * f(b) < 0
-   - This ensures there is at least one root in the interval.
+1. **Compile the Program:**
+   To compile the program, ensure you link the math library by using the `-lm` flag with `gcc`.
 
-2. **Calculate the midpoint c:**
-   c = (a + b)/2
-
-3. **Evaluate f(c):**
-   - If f(c) is close to zero (within the specified tolerance), then c is the root.
-   - Otherwise, determine the next interval:
-     - If f(a) * f(c) < 0, the root is in [a, c], so set b = c
-     - Otherwise, the root is in [c, b], so set a = c
-
-4. **Repeat the process** until the interval width (b - a) is less than the tolerance level.
-
-## Example Problem
-Find the root of the function:
-
-f(x) = x³ - 4x - 9
-
-in the interval [2, 3] using the Bisection Method with a tolerance level of **0.001**.
-
-## Program Explanation
-This C program implements the Bisection Method for solving non-linear equations.
-
-### Code Breakdown
-
-1. **Define the function f(x):**
-   ```c
-   double fx(double x) {
-       return x * x * x - 4 * x - 9;
-   }
+   ```bash
+   gcc main.c -o main -lm
    ```
-   This function represents the equation x³ - 4x - 9 = 0
 
-2. **Bisection Method Implementation:**
-   - Checks if the interval is valid (f(a) * f(b) < 0)
-   - Iteratively computes the midpoint and evaluates f(c)
-   - Adjusts the interval based on the sign of f(c) and continues until the solution meets the tolerance criterion.
+2. **Run the Program:**
+   After compiling, run the executable as follows:
 
-3. **Main Function:**
-   - Takes user input for the interval [a, b]
-   - Calls the `bisection()` function to find the root.
-   - Prints the result.
+   ```bash
+   ./main
+   ```
 
-### Sample Output
+3. **Input:**
+   - Enter the interval \([a, b]\) when prompted.
+   - Enter the desired precision (number of decimal places).
+
+#### **Example:**
+
+- **Input:**
+  ```plaintext
+  Enter the interval [a, b]: 2 3
+  Enter the number of decimal places for precision: 4
+  ```
+
+- **Output:**
+  
+| Iter   | a              | b              | c              | f(c)
+| ---| ---| ---| ---| ---
+| 1      | 2.000000       | 3.000000       | 2.500000       | -3.375000
+| 2      | 2.500000       | 3.000000       | 2.750000       | 0.796875
+| 3      | 2.500000       | 2.750000       | 2.625000       | -1.412109
+| 4      | 2.625000       | 2.750000       | 2.687500       | -0.339111
+| 5      | 2.687500       | 2.750000       | 2.718750       | 0.220917
+| 6      | 2.687500       | 2.718750       | 2.703125       | -0.061077
+| 7      | 2.703125       | 2.718750       | 2.710938       | 0.079423
+| 8      | 2.703125       | 2.710938       | 2.707031       | 0.009049
+| 9      | 2.703125       | 2.707031       | 2.705078       | -0.026045
+| 10     | 2.705078       | 2.707031       | 2.706055       | -0.008506
+| 11     | 2.706055       | 2.707031       | 2.706543       | 0.000270
+| 12     | 2.706055       | 2.706543       | 2.706299       | -0.004118
+| 13     | 2.706299       | 2.706543       | 2.706421       | -0.001924
+| 14     | 2.706421       | 2.706543       | 2.706482       | -0.000827
+| 15     | 2.706482       | 2.706543       | 2.706512       | -0.000279
+| ---| ---| ---| ---| ---
+
 ```
-Enter the interval [a, b]: 2 3
-```
----
-| Iter   |  a             |  b               |  c               |  f(c)          |
-| ---   |  ---           |  ---             |  ---             |  ---           |
-| 1     |  2.000000      |  3.000000       |  2.500000       |  -3.375000    |
-| 2     |  2.500000      |  3.000000       |  2.750000       |  0.796875     |
-| 3     |  2.500000      |  2.750000       |  2.625000       |  -1.412109    |
-| 4     |  2.625000      |  2.750000       |  2.687500       |  -0.339111    |
-| 5     |  2.687500      |  2.750000       |  2.718750       |  0.220917     |
-| 6     |  2.687500      |  2.718750       |  2.703125       |  -0.061077    |
-| 7     |  2.703125      |  2.710938       |  2.707031       |  0.009049     |
-| 8     |  2.703125      |  2.707031       |  2.705078       |  -0.026045    |
-| 9     |  2.705078      |  2.707031       |  2.706055       |  -0.008506    |
-
-```
-Approximate root: 2.706055
+Approximate root: 2.7065
 ```
 
-## Conclusion
-- The Bisection Method is an easy and reliable approach for root-finding.
-- It is **guaranteed to converge** if the interval is chosen correctly.
-- However, it may be **slow** compared to other methods like Newton-Raphson.
-- This program demonstrates how to apply the method effectively in C.
-
-Happy Coding! 🚀
+#### **Notes:**
+- The program continues iterating until the midpoint converges to the desired precision.
+- You can modify the `fx(x)` function to solve a different non-linear equation.
 

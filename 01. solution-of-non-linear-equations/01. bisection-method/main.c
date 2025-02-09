@@ -1,17 +1,9 @@
-/**
- * 01. Solution of Non-Linear Equations
- *  0.1 Bisection Method
- */
-
 #include <stdio.h>
 #include <math.h>
 
-#define TOLERANCE_LEVEL 0.0000001 // Precision level for stopping criteria
-
 /**
  * Function equivalent to f(x)
- * This function defines the equation whose root we need to find.
- * Example: f(x) = x^2 - 2x - 5 = 0
+ * Example: f(x) = x^3 - 4x - 9 = 0
  */
 double fx(double x)
 {
@@ -19,61 +11,69 @@ double fx(double x)
 }
 
 /**
- * Function to perform the Bisection Method
- * It finds the root of f(x) = 0 in the interval [a, b]
+ * Function to check if two floating-point numbers are equal up to 'precision' decimal places
  */
-void bisection(double a, double b)
+int isEqual(double x, double y, int precision)
 {
-  // Step 1: Check if the provided interval is valid
-  // The function values at 'a' and 'b' must have opposite signs (f(a) * f(b) < 0)
+  double factor = pow(10, precision);
+  return (round(x * factor) == round(y * factor));
+}
+
+/**
+ * Bisection Method with precision control
+ */
+void bisection(double a, double b, int precision)
+{
   if (fx(a) * fx(b) >= 0)
   {
     printf("Invalid interval. f(%lf) = %lf and f(%lf) = %lf must have opposite signs.\n", a, fx(a), b, fx(b));
     return;
   }
 
-  double c;          // Midpoint of the interval
-  int iteration = 1; // Counter for iterations
+  double c, prev_c = 0.0; // Midpoint and previous midpoint
+  int iteration = 1;
 
-  // Display table header for iterations
   printf("\nIter\t a\t\t b\t\t c\t\t f(c)\n");
 
-  // Step 2: Iterate until the interval width is smaller than the tolerance level
-  while ((b - a) >= TOLERANCE_LEVEL)
+  while (1)
   {
-    // Step 3: Compute the midpoint
     c = (a + b) / 2.0;
 
-    // Print the values of the current iteration
-    printf("%d\t %.6f\t %.6f\t %.6f\t %.6f\n", iteration++, a, b, c, fx(c));
+    printf("%d\t %.*f\t %.*f\t %.*f\t %.*f\n", iteration++, precision + 2, a, precision + 2, b, precision + 2, c, precision + 2, fx(c));
 
-    // Step 4: Determine the new subinterval
-    if (fx(a) * fx(c) < 0) // Root is in [a, c]
+    if (isEqual(c, prev_c, precision)) // Stop when two consecutive midpoints match up to the precision
+    {
+      break;
+    }
+
+    prev_c = c;
+
+    if (fx(a) * fx(c) < 0)
     {
       b = c;
     }
-    else // Root is in [c, b]
+    else
     {
       a = c;
     }
   }
 
-  // Step 5: Print the final result
-  printf("\nApproximate root: %.6f\n", c);
-  printf("Absolute error: %.10f\n", fabs(b - a));
+  printf("\nApproximate root: %.*f\n", precision, c);
 }
 
-// Main function to drive the program
+// Main function
 int main()
 {
   double a, b;
+  int precision;
 
-  // Prompt user to enter the interval [a, b]
   printf("Enter the interval [a, b]: ");
   scanf("%lf %lf", &a, &b);
 
-  // Call the bisection method with the given interval
-  bisection(a, b);
+  printf("Enter the number of decimal places for precision: ");
+  scanf("%d", &precision);
+
+  bisection(a, b, precision);
 
   return 0;
 }
