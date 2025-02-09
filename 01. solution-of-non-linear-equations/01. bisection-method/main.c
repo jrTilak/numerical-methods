@@ -47,13 +47,8 @@ void bisection(double a, double b)
     // Print the values of the current iteration
     printf("%d\t %.6f\t %.6f\t %.6f\t %.6f\n", iteration++, a, b, c, fx(c));
 
-    // Step 4: Check if f(c) is close enough to zero (root found)
-    if (fabs(fx(c)) < TOLERANCE_LEVEL)
-    {
-      break;
-    }
-    // Step 5: Determine the new subinterval
-    else if (fx(a) * fx(c) < 0) // Root is in [a, c]
+    // Step 4: Determine the new subinterval
+    if (fx(a) * fx(c) < 0) // Root is in [a, c]
     {
       b = c;
     }
@@ -63,7 +58,7 @@ void bisection(double a, double b)
     }
   }
 
-  // Step 6: Print the final result
+  // Step 5: Print the final result
   printf("\nApproximate root: %.6f\n", c);
 }
 
