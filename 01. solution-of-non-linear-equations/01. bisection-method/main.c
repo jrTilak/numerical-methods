@@ -6,7 +6,7 @@
 #include <stdio.h>
 #include <math.h>
 
-#define TOLERANCE_LEVEL 0.001 // Precision level for stopping criteria
+#define TOLERANCE_LEVEL 0.0000001 // Precision level for stopping criteria
 
 /**
  * Function equivalent to f(x)
@@ -60,6 +60,7 @@ void bisection(double a, double b)
 
   // Step 5: Print the final result
   printf("\nApproximate root: %.6f\n", c);
+  printf("Absolute error: %.10f\n", fabs(b - a));
 }
 
 // Main function to drive the program
